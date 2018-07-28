@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Codexpress</title>
+<title>Urban Farming</title>
 <meta name="description" content="">
 <meta name="author" content="">
 
@@ -24,136 +24,12 @@
 <link rel="stylesheet" type="text/css" href="css/nivo-lightbox/nivo-lightbox.css">
 <link rel="stylesheet" type="text/css" href="css/nivo-lightbox/default.css">
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800,600,300' rel='stylesheet' type='text/css'>
-<script type="text/javascript" src="js/modernizr.custom.js"></script>
 
 <!-- google chart
     ================================================== -->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
 <script src="js/app.js"></script>
-<script>
-$(function (){
-    getData();
-});
-var arr=[];
-function getData(){
-    $.ajax({
-        type:"GET",
-        beforeSend: function(request){
-            request.setRequestHeader("x-api-key", "GdgwUaoKRYaglp7SyO4WFGdp1SnOQdX3fuID0hj6");
-        },
-        url: "https://e58fw3pq9b.execute-api.us-east-1.amazonaws.com/dev/codexpress_data?type=data",
-        success: function(result){
-            let x = result.data;
-            var time=[];
-            var soil_Temp=[];
-            var soil_Moist=[];
-            var Temp=[];
-            var Humidity=[];
-            var input_Current=[];
-            var input_Voltage=[];
-            var Rssi=[];
-            var Switch=[];
-            for(let i = 0; i < x.length; i++) {
-                var obj = x[i];
-                if (obj.soil_temp == null)
-                  soil_Temp[i]=0;
-                else
-                  soil_Temp[i]=parseFloat(obj.soil_temp);
-                if (obj.soil_moist == null)
-                    soil_Moist[i]=0;
-                else
-                    soil_Moist[i]=parseFloat(obj.soil_moist);
-                if (obj.temp == null)
-                    Temp[i]=0;
-                else
-                    Temp[i]=parseFloat(obj.temp);
-                if (obj.humidity == null)
-                   Humidity[i]=0;
-                else
-                   Humidity[i]=parseFloat(obj.humidity);
-                if (obj.input_current == null)
-                   input_Current[i]=0;
-                else
-                   input_Current[i]=parseFloat(obj.input_current);
-                if (obj.input_voltage == null)
-                   input_Voltage[i]=0;
-                else
-                   input_Voltage[i]=parseFloat(obj.input_voltage);
-                if (obj.rssi == null)
-                   Rssi[i]=0;
-                else
-                   Rssi[i]=parseFloat(obj.rssi);
-                if (obj.sw == null)
-                   Switch[i]=0;
-                else
-                   Switch[i]=parseFloat(obj.switch);
-            }
-            for(let i=0;i<x.length;i++){
-                let temp=[];
-                //temp.push(time[i]);
-                temp.push(soil_Temp[i]);
-                temp.push(soil_Moist[i]);
-                temp.push(Temp[i]);
-                temp.push(Humidity[i]);
-                temp.push(input_Current[i]);
-                temp.push(input_Voltage[i]);
-                temp.push(Rssi[i]);
-                temp.push(Switch[i]);
-                arr.push(temp);
-            }
-            //console.log(arr);
-            google.charts.load('current', {'packages':['line']});
-            google.charts.setOnLoadCallback(drawChart);
-        }
-    });
-}
-
-function drawChart() {
-    var data = new google.visualization.DataTable(arr);
-    //data.addColumn('number', 'Time');
-    data.addColumn('number', 'Soil Temperature');
-    data.addColumn('number', 'Soil Moisture');
-    data.addColumn('number', 'Air Temperature');
-    data.addColumn('number', 'Air Humidity');
-    data.addColumn('number', 'Input Current');
-    data.addColumn('number', 'Input Voltage');
-    data.addColumn('number', 'RSSI');
-    data.addColumn('number', 'Switch');
-
-    data.addRows(arr);
-
-    var options = {
-        hAxis: {
-            viewWindow: {
-                min: 0,
-                max: 23
-            },
-        },
-        chart: {
-            title: 'Prototype 1',
-            subtitle: 'Dated: '
-        },
-        width: 900,
-        height: 500
-    };
-
-    var chart = new google.charts.Line(document.getElementById('linechart_material'));
-    chart.draw(data, google.charts.Line.convertOptions(options));
-}
-
-function gettime(UTC_time){
-    let start=UTC_time.indexOf("T");
-    let time=UTC_time.substr(start+1,start+6);
-    return time;
-}
-</script>
-<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
 </head>
 <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
 <!-- Navigation
@@ -163,7 +39,7 @@ function gettime(UTC_time){
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-      <a class="navbar-brand page-scroll" href="#page-top"><i class="fa fa-play fa-rotate-270"></i> CodeXPress</a> </div>
+      <a class="navbar-brand page-scroll" href="#page-top"><i class="fa fa-play fa-rotate-270"></i> CodeXpress</a> </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -200,8 +76,9 @@ function gettime(UTC_time){
       <div class="col-xs-12 col-md-6"> <img src="img/ARDUINO_UNO_DIP_01.png" class="img-responsive" alt="" height="650" width="650"> </div>
       <div class="col-xs-12 col-md-6">
         <div class="about-text">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam. Sed commodo nibh ante facilisis bibendum dolor feugiat at. Duis sed dapibus leo nec ornare diam commodo nibh.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam. Sed commodo nibh ante facilisis bibendum dolor feugiat at. Duis sed dapibus leo nec ornare.</p>
+          <p>The goal of the project is to engage Engineering students from HKU through a series of project-based experiential learning activities that lead to a final weeklong visit to Dagon University in Myanmar. A key objective of this project is to allow students from Hong Kong and Myanmar to understand and appreciate the role of technologies in developing a sustainable urban living environment in spite of their geographical and socio-economical differences.
+            It serves as a unique learning experience for HKU students as they have to develop, prepare and deliver the teaching materials, as well as to construct the project with students in Myanmar throughout this process. Learning from last year’s experience, we intend to focus this year’s project on the theme of urban farming and food production. The focus on farming and food production adds an important dimension to the project where HKU students, who are mainly brought up in well developed urban settings, and Dagon University students, who are living a developing country, can engage in intellectual exchanges through technologies that aim to address a common global problem on food production through urban farming..</p>
+          <p> On this page, you can see visualization of data through the means of google chart, describing different parameters of air and soil property such as air temperature, humidity etc. These properties are very useful for the farmers </p>
           <a href="#data" class="btn btn-default btn-lg page-scroll">View Data</a> </div>
       </div>
     </div>
@@ -230,8 +107,6 @@ function gettime(UTC_time){
 <script type="text/javascript" src="js/SmoothScroll.js"></script>
 <script type="text/javascript" src="js/nivo-lightbox.js"></script>
 <script type="text/javascript" src="js/jquery.isotope.js"></script>
-<script type="text/javascript" src="js/jqBootstrapValidation.js"></script>
-<script type="text/javascript" src="js/contact_me.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>
